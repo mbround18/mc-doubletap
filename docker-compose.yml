@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  mc-doubletap:
+    image: mbround18/mc-doubletap:latest
+    build: .
+    restart: "no"
+    volumes:
+      - ./src:/data/src
+      - plugins:/data/build/libs
+
+  mc-server:
+    image: itzg/minecraft-server:adopt11
+    environment:
+      EULA: "TRUE"
+      TYPE: "PAPER"
+      REPLACE_ENV_VARIABLES: "TRUE"
+      MC_DOUBLETAP_OVERWRITE: "true"
+    ports:
+    - 25565:25565
+    - 8101:8101
+    volumes:
+    - ./tmp/server:/data
+    - plugins:/data/plugins
+    restart: "no"
+    depends_on:
+      - "mc-doubletap"
+
+volumes:
+  plugins:

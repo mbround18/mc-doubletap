@@ -1,0 +1,74 @@
+apply plugin: 'java'
+
+group = 'doubletap.boop.ninja'
+version = '1.0-UNTESTED-SNAPSHOT'
+
+
+compileJava   {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc-repo'
+        url = 'https://papermc.io/repo/repository/maven-public/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        name = 'CodeMC'
+        url  = 'https://repo.codemc.org/repository/maven-public'
+    }
+}
+
+configurations {
+    // configuration that holds jars to include in the jar
+    extraLibs
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    enabled = true
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+dependencies {
+    implementation 'org.jetbrains:annotations:20.1.0'
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.4-R0.1-SNAPSHOT'
+
+    // Libs to be included on publication of jar
+    extraLibs group: "org.bstats", name: "bstats-bukkit", version: "1.7"
+    extraLibs group: "com.sparkjava", name: "spark-core", version: "2.9.3"
+    extraLibs group: "com.sparkjava", name: "spark-template-mustache", version: "2.7.1"
+    extraLibs group: "com.graphql-java", name: "graphql-java", version: "16.1"
+    extraLibs group: 'com.auth0', name: 'java-jwt', version: '3.12.0'
+
+    configurations.compile.extendsFrom(configurations.extraLibs)
+}
+
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    // This will ensure that this task is redone when the versions change.
+    inputs.property 'version', version
+
+    // Replace stuff in mods.toml, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'plugin.yml'
+
+        // Replace version
+        expand 'version': version
+    }
+
+    // Copy everything else except the mods.toml
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'plugin.yml'
+    }
+}

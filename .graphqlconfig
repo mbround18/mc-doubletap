@@ -1,0 +1,15 @@
+{
+  "name": "Minecraft Doubletap",
+  "schemaPath": "src/main/resources/schema.gql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "http://localhost:8101/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": false
+      }
+    }
+  }
+}

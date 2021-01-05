@@ -1,0 +1,34 @@
+{
+  "policies": [
+    {
+      "name": "Server Permissions",
+      "effect": "Allow",
+      "attributes": [
+        "Server.name",
+        "Server.motd",
+        "Server.bukkitVersion",
+        "Server.maxPlayers",
+        "Server.onlinePlayers"
+      ]
+    },
+    {
+      "name": "Player Permissions",
+      "effect": "Allow",
+      "attributes": [
+        "Player.name",
+        "Player.isOnline",
+        "Player.isBanned",
+        "OfflinePLayer.name",
+        "OfflinePLayer.isOnline",
+        "OfflinePLayer.isBanned"
+      ]
+    },
+    {
+      "name": "Whitelist Permissions",
+      "effect": "Allow",
+      "attributes": [
+        "WhitelistQuery.players"
+      ]
+    }
+  ]
+}

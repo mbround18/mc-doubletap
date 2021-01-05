@@ -1,0 +1,19 @@
+name: Java CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: gradle:jdk11
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Build with Gradle
+        run: gradle build
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: |
+            build/libs/*.jar
