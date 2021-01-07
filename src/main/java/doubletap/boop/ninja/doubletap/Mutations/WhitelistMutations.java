@@ -17,7 +17,6 @@ public class WhitelistMutations {
             throw new GraphQLException(format("Player %s not found!", name));
         }
         OfflinePlayer player = getOfflinePlayer(playerInfo.idToUUID());
-
         if (player.isWhitelisted() == status) {
             logger.info(format("%s whitelist status is unchanged", name));
             return player;

@@ -60,9 +60,17 @@ I was inspired by the following plugins:
 
 - The plugin has instance issues, replacing the jar file and then reloading the server breaks the interface. I wish I could make it more resilient, but I am unsure how. 
 
+
 ### Plans for the future
 
-- Completed: Currently, I will enable harmless endpoints for information and limit what is publicly available. 
-- Completed: I intend to implement policy based authorization, which in turn will allow operators to design auth schemas for people who are signed in. 
-- Completed: Authentication will be enforced via JWT or similar authorization structure. With the end goal of making authorization simple to implement on a frontend or server to server application. 
+- Add a feature to allow subscriptions to data. This will provide a useful interface for things like player positions etc.
+- Add ban feature
+- Add plugin feature
+- Add command feature
+
+### Completed Plans
+
+- Currently, I will enable harmless endpoints for information and limit what is publicly available.
+- I intend to implement policy based authorization, which in turn will allow operators to design auth schemas for people who are signed in.
+- Authentication will be enforced via JWT or similar authorization structure. With the end goal of making authorization simple to implement on a frontend or server to server application.
 
