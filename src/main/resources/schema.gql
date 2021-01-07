@@ -17,16 +17,13 @@ type MutationType {
 
 type OfflinePlayer {
     bedSpawnLocation: Location
-    " Uses Custom Fetcher"
-    isBanned: Boolean!
-    " Uses Custom Fetcher"
-    isOnline: Boolean!
-    " Uses Custom Fetcher"
-    isWhitelisted: Boolean!
-    lastPlayed: Float!
-    lastSeen: Float!
+    isBanned: Boolean
+    isOnline: Boolean
+    isWhitelisted: Boolean
+    lastPlayed: Float
+    lastSeen: Float
     name: String!
-    player: Player!
+    player: Player
     uniqueId: ID!
 }
 

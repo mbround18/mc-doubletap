@@ -3,14 +3,13 @@ package doubletap.boop.ninja.doubletap.Controllers.Graphql;
 import doubletap.boop.ninja.doubletap.Authorizors.Base.Policy;
 import doubletap.boop.ninja.doubletap.Authorizors.Base.Role;
 import doubletap.boop.ninja.doubletap.Mutations.WhitelistMutations;
+import doubletap.boop.ninja.doubletap.Queries.OfflinePlayerFetcher;
 import doubletap.boop.ninja.doubletap.Queries.ServerFetcher;
 import doubletap.boop.ninja.doubletap.Queries.WorldFetcher;
 import graphql.schema.PropertyDataFetcher;
 import graphql.schema.idl.TypeRuntimeWiring;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 import static org.bukkit.Bukkit.getPlayer;
 import static org.bukkit.Bukkit.getServer;
@@ -78,7 +77,8 @@ public class LocalRuntimeWiring {
     }
 
     private TypeRuntimeWiring.Builder offlinePlayer(TypeRuntimeWiring.Builder builder) {
-        return playerBaseType(builder);
+        return playerBaseType(builder)
+                .dataFetcher("name", OfflinePlayerFetcher::playerName);
     }
 
     private TypeRuntimeWiring.Builder whitelistQuery(TypeRuntimeWiring.Builder builder) {
