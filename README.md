@@ -13,7 +13,7 @@ This plugin uses bstats for metrics, check out the bstats page at `https://bstat
 
 ### Server Owners
 
-- Download or compile a jar and place it into your `plugins` folder.
+- [Download the latest snapshot](https://github.com/mbround18/mc-doubletap/releases/tag/latest-snapshot) or compile a jar and place it into your `plugins` folder.
 - Start or Restart the server. 
 - Edit the file located at: `./plugins/Doubletap/config.json`
 
