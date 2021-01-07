@@ -32,6 +32,7 @@ jobs:
       # - Upload artifacts defined by the user.
       - uses: eine/tip@master
         with:
+          tag: latest-snapshot
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
             build/libs/*.jar
