@@ -14,10 +14,16 @@ public class KeycloakJWT {
     public String azp;
     public HashMap<String, HashMap<String, String[]>> resource_access;
 
+    private URI keycloakHost() {
+        String hostname = Doubletap.config.authorizerOptions.get("host");
+        String realm = Doubletap.config.authorizerOptions.get("realm");
+        return URI.create(String.format("%s/auth/realms/%s/protocol/openid-connect/userinfo", hostname, realm));
+    }
+
     public boolean isValid(String fullJWT)  {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(this.iss + "/protocol/openid-connect/userinfo"))
+                .uri(keycloakHost())
                 .header("Authorization", fullJWT)
                 .build();
         try {

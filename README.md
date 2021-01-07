@@ -4,22 +4,29 @@
 
 > Compatibility is based on where I have tested the plugin and if it worked without issue.  
 
+- Java 11+ (This plugin does not support Java 1.8)
 - PaperMC 1.16+
 - Bukkit 1.16+
 
 This plugin uses bstats for metrics, check out the bstats page at `https://bstats.org/plugin/bukkit/Doubletap/9717`
+## Setup
+
+### Server Owners
+
+- Download or compile a jar and place it into your `plugins` folder.
+- Start or Restart the server. 
+- Edit the file located at: `./plugins/Doubletap/config.json`
+
+> Currently, the config.json starts with a base authorizer as default. I suggest you change this to your liking. 
+> What I have done is use Keycloak for my role authorizer. 
+> What you could do is put the graphql interface behind http basic auth and make admin the base. 
+> Or perhaps, use netlify or keycloak. 
 
 ## Query Examples
 
 ### Whitelist
 
 ![](./docs/assets/query-example-01.png)
-
-## Setup
-
-### Server Owners
-
-- Download or compile a jar and place it into your `plugins` folder.
 
 ### Developers
 
@@ -55,7 +62,7 @@ I was inspired by the following plugins:
 
 ### Plans for the future
 
-- Currently, I will enable harmless endpoints for information and limit what is publicly available. 
-- I intend to implement policy based authorization, which in turn will allow operators to design auth schemas for people who are signed in. 
-- Authentication will be enforced via JWT or similar authorization structure. With the end goal of making authorization simple to implement on a frontend or server to server application. 
+- Completed: Currently, I will enable harmless endpoints for information and limit what is publicly available. 
+- Completed: I intend to implement policy based authorization, which in turn will allow operators to design auth schemas for people who are signed in. 
+- Completed: Authentication will be enforced via JWT or similar authorization structure. With the end goal of making authorization simple to implement on a frontend or server to server application. 
 
