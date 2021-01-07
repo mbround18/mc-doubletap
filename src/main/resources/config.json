@@ -1,5 +1,9 @@
 {
   "port": 8101,
   "debug": false,
-  "authorizer": "base"
+  "authorizer": "base",
+  "authorizerOptions": {
+    "host": "SEE README",
+    "realm": "SEE README"
+  }
 }
