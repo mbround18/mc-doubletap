@@ -5,4 +5,6 @@ RUN mkdir -p /data
 COPY src build.gradle gradle.properties settings.gradle /data/
 WORKDIR /data
 
+RUN chmod 777 /data
+
 CMD ["/usr/bin/gradle", "build"]

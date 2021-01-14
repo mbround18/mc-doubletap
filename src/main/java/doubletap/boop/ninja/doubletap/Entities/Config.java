@@ -1,12 +1,17 @@
 package doubletap.boop.ninja.doubletap.Entities;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class Config {
-    public int port;
-    public boolean debug = false;
 
-    public String authorizer = "base";
-    public HashMap<String, String> authorizerOptions;
+  public int port = 8101;
+  public boolean debug = false;
 
+  public String authorizer = "base";
+  public HashMap<String, String> authorizerOptions;
+
+  public String getAuthorizerOption(String key) {
+    return Optional.ofNullable(System.getenv(key)).orElseGet(() -> this.authorizerOptions.get(key));
+  }
 }

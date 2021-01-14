@@ -4,3 +4,4 @@ docs/
 gradle/
 tmp/
 .github/
+node_modules/
