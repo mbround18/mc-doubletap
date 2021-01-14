@@ -68,7 +68,7 @@ public class GraphqlController {
   }
 
   private BaseAuthorizer getAuthorizer() {
-    String authorizerName = config.authorizer.toLowerCase(Locale.ROOT);
+    String authorizerName = config.getAuthorizer();
     authorizerName = authorizerName.toLowerCase(Locale.ROOT);
     switch (authorizerName) {
       case "netlify":
