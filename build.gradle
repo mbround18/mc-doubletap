@@ -15,10 +15,6 @@ compileJava   {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-build.dependsOn {
-    lint
-}
-
 repositories {
     mavenCentral()
     jcenter()
