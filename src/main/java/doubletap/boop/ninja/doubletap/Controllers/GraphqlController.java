@@ -18,14 +18,13 @@ import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
+import java.io.InputStream;
+import java.util.*;
 import org.jetbrains.annotations.NotNull;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.template.mustache.MustacheTemplateEngine;
-
-import java.io.InputStream;
-import java.util.*;
 
 public class GraphqlController {
 
