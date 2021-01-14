@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://github.com/mbround18/mc-doubletap/blob/main/src/main/resources/schema/config.schema.json",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "examples": [
+    {
+      "port": 8101,
+      "debug": false,
+      "authorizer": "base",
+      "authorizerOptions": {
+        "host": "SEE README",
+        "realm": "SEE README"
+      }
+    }
+  ],
+  "required": ["port", "debug", "authorizer", "authorizerOptions"],
+  "properties": {
+    "DISCORD_SERVER_ID": {
+      "$id": "#/properties/DISCORD_SERVER_ID",
+      "type": "string",
+      "title": "The ID of the server you want to use for reference",
+      "description": "Validated which server you are connected to.",
+      "default": "CHANGE ME",
+      "examples": []
+    },
+    "DISCORD_BOT_TOKEN": {
+      "$id": "#/properties/DISCORD_BOT_TOKEN",
+      "type": "string",
+      "title": "The bot token for discord",
+      "description": "Used for making API calls and getting information",
+      "default": "CHANGE ME",
+      "examples": []
+    },
+    "port": {
+      "$id": "#/properties/port",
+      "type": "integer",
+      "title": "The port schema",
+      "description": "Runs the graphql server on a given port",
+      "default": 8101,
+      "examples": [8101]
+    },
+    "debug": {
+      "$id": "#/properties/debug",
+      "type": "boolean",
+      "title": "The debug schema",
+      "description": "Whether or not to be noisy",
+      "default": false,
+      "examples": [false, true]
+    },
+    "authorizer": {
+      "$id": "#/properties/authorizer",
+      "type": "string",
+      "title": "The authorizer schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "base",
+      "examples": ["base", "netlify", "keycloak", "discord"]
+    },
+    "authorizerOptions": {
+      "$id": "#/properties/authorizerOptions",
+      "type": "object",
+      "title": "The authorizerOptions schema",
+      "description": "Provides options for the authorizer to utilize",
+      "default": {},
+      "examples": [
+        {
+          "host": "https://keycloak.exmaple.com",
+          "realm": "mc-realm"
+        }
+      ],
+      "properties": {
+        "host": {
+          "$id": "#/properties/authorizerOptions/properties/host",
+          "type": "string",
+          "title": "The host schema",
+          "description": "Host of your keycloak instance",
+          "default": "",
+          "examples": ["https://keycloak.exmaple.com"]
+        },
+        "realm": {
+          "$id": "#/properties/authorizerOptions/properties/realm",
+          "type": "string",
+          "title": "The realm schema",
+          "description": "Realm name that your keycloak client is under",
+          "default": "",
+          "examples": ["mc-realm"]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

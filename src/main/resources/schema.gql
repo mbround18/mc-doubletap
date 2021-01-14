@@ -1,178 +1,170 @@
 # This file was generated based on ".graphqlconfig". Do not edit manually.
 
 schema {
-    query: QueryType
-    mutation: MutationType
+  query: QueryType
+  mutation: MutationType
 }
 
 type Location {
-    x: Int!
-    y: Int!
-    z: Int!
+  x: Int!
+  y: Int!
+  z: Int!
 }
 
 type MutationType {
-    whitelist: WhitelistMutation
+  whitelist: WhitelistMutation
 }
 
 type OfflinePlayer {
-    bedSpawnLocation: Location
-    isBanned: Boolean
-    isOnline: Boolean
-    isWhitelisted: Boolean
-    lastPlayed: Float
-    lastSeen: Float
-    name: String!
-    player: Player
-    uniqueId: ID!
+  bedSpawnLocation: Location
+  isBanned: Boolean
+  isOnline: Boolean
+  isWhitelisted: Boolean
+  lastPlayed: Float
+  lastSeen: Float
+  name: String!
+  player: Player
+  uniqueId: ID!
 }
 
 type Player {
-    address: ID!
-    affectsSpawning: Boolean!
-    allowFlight: Boolean!
-    bedSpawnLocation: Location
-    clientViewDIstance: Int!
-    compassTarget: Location
-    exhaustion: Float!
-    exp: Float!
-    flySpeed: Float!
-    foodLevel: Int!
-    " Uses Custom Fetcher"
-    hasResourcePack: Boolean!
-    healthScale: Float!
-    " Uses Custom Fetcher"
-    isBanned: Boolean!
-    " Uses Custom Fetcher"
-    isFlying: Boolean!
-    " Uses Custom Fetcher"
-    isOnline: Boolean!
-    " Uses Custom Fetcher"
-    isWhitelisted: Boolean!
-    locale: String!
-    location: Location!
-    " Uses Custom Fetcher"
-    name: String!
-    playTime: Float!
-    timeOffset: Float!
+  address: ID!
+  affectsSpawning: Boolean!
+  allowFlight: Boolean!
+  bedSpawnLocation: Location
+  clientViewDIstance: Int!
+  compassTarget: Location
+  exhaustion: Float!
+  exp: Float!
+  flySpeed: Float!
+  foodLevel: Int!
+  " Uses Custom Fetcher"
+  hasResourcePack: Boolean!
+  healthScale: Float!
+  " Uses Custom Fetcher"
+  isBanned: Boolean!
+  " Uses Custom Fetcher"
+  isFlying: Boolean!
+  " Uses Custom Fetcher"
+  isOnline: Boolean!
+  " Uses Custom Fetcher"
+  isWhitelisted: Boolean!
+  locale: String!
+  location: Location!
+  " Uses Custom Fetcher"
+  name: String!
+  playTime: Float!
+  timeOffset: Float!
 }
 
 type QueryType {
-    offlinePlayer(name: String!): OfflinePlayer
-    player(name: String!): Player
-    server: Server
-    whitelist: WhitelistQuery
-    world(name: String = "world"): World
+  offlinePlayer(name: String!): OfflinePlayer
+  player(name: String!): Player
+  server: Server
+  whitelist: WhitelistQuery
+  world(name: String = "world"): World
 }
 
 type Server {
-    allowEnd: Boolean!
-    allowFlight: Boolean!
-    allowNether: Boolean!
-    ambientSpawnLimit: Int!
-    animalSpawnLimit: Int!
-    averageTickTime: Float!
-    """
-
-    BanList    getBanListâ(BanList.Type type)
-    Set<OfflinePlayer>    getBannedPlayers()
-    """
-    bukkitVersion: String!
-    " Get the current internal server tick"
-    currentTick: Int!
-    """
-
-    GameMode    getDefaultGameMode()
-    Entity    getEntityâ(UUID uuid)
-    """
-    generateStructures: Boolean!
-    "    HelpMap\tgetHelpMap()"
-    idleTimeout: Int!
-    ip: String!
-    """
-
-    Set<String>    getIPBans()
-    ItemFactory    getItemFactory()
-    Logger    getLogger()
-    LootTable    getLootTableâ(NamespacedKey key)
-    """
-    maxPlayers: Int!
-    maxWorldSize: Int!
-    "    Messenger\tgetMessenger()"
-    minecraftVersion: String!
-    "    MobGoals\tgetMobGoals()"
-    monsterSpawnLimit: Int!
-    motd: String!
-    name: String!
-    """
-
-    OfflinePlayer    getOfflinePlayerâ(UUID id)
-    OfflinePlayer    getOfflinePlayerIfCachedâ(String name)
-    OfflinePlayer[]    getOfflinePlayers()
-    """
-    onlineMode: Boolean!
-    onlinePlayers: [Player!]
-    "    Set<OfflinePlayer>\tgetOperators()"
-    permissionMessage: String!
-    """
-
-    Player    getPlayerâ(String name)
-    Player    getPlayerâ(UUID id)
-    Player    getPlayerExactâ(String name)
-    UUID    getPlayerUniqueIdâ(String playerName)
-    PluginCommand    getPluginCommandâ(String name)
-    PluginManager    getPluginManager()
-    """
-    port: Int!
-    """
-
-    Recipe    getRecipeâ(NamespacedKey recipeKey)
-    List<Recipe>    getRecipesForâ(ItemStack result)
-    ScoreboardManager    getScoreboardManager()
-    CachedServerIcon    getServerIcon()
-    ServicesManager    getServicesManager()
-    """
-    shutdownMessage: String!
-    spawnRadius: Int!
-    """
-
-    Tag<T>    getTagâ(String registry, NamespacedKey tag, Class<T> clazz)
-    Iterable<Tag<T>>    getTagsâ(String registry, Class<T> clazz)
-    """
-    ticksPerAmbientSpawns: Int!
-    ticksPerAnimalSpawns: Int!
-    ticksPerMonsterSpawns: Int!
-    ticksPerWaterAmbientSpawns: Int!
-    ticksPerWaterSpawns: Int!
-    """
-
-    long[]    getTickTimes()
-    double[]    getTPS()
-    """
-    updateFolder: String!
-    "    File\tgetUpdateFolderFile()"
-    version: String!
-    viewDistance: Int!
-    "    Warning.WarningState\tgetWarningState()"
-    waterAmbientSpawnLimit: Int!
-    waterAnimalSpawnLimit: Int!
-    " Uses custom data fetcher"
-    whitelistedPlayers: [OfflinePlayer!]
-    world(name: String = "world"): World!
-    worldType: String!
-    worlds: [World!]
+  allowEnd: Boolean!
+  allowFlight: Boolean!
+  allowNether: Boolean!
+  ambientSpawnLimit: Int!
+  animalSpawnLimit: Int!
+  averageTickTime: Float!
+  """
+  BanList    getBanListâ(BanList.Type type)
+  Set<OfflinePlayer>    getBannedPlayers()
+  """
+  bukkitVersion: String!
+  " Get the current internal server tick"
+  currentTick: Int!
+  """
+  GameMode    getDefaultGameMode()
+  Entity    getEntityâ(UUID uuid)
+  """
+  generateStructures: Boolean!
+  "    HelpMap	getHelpMap()"
+  idleTimeout: Int!
+  ip: String!
+  """
+  Set<String>    getIPBans()
+  ItemFactory    getItemFactory()
+  Logger    getLogger()
+  LootTable    getLootTableâ(NamespacedKey key)
+  """
+  maxPlayers: Int!
+  maxWorldSize: Int!
+  "    Messenger	getMessenger()"
+  minecraftVersion: String!
+  "    MobGoals	getMobGoals()"
+  monsterSpawnLimit: Int!
+  motd: String!
+  name: String!
+  """
+  OfflinePlayer    getOfflinePlayerâ(UUID id)
+  OfflinePlayer    getOfflinePlayerIfCachedâ(String name)
+  OfflinePlayer[]    getOfflinePlayers()
+  """
+  onlineMode: Boolean!
+  onlinePlayers: [Player!]
+  "    Set<OfflinePlayer>	getOperators()"
+  permissionMessage: String!
+  """
+  Player    getPlayerâ(String name)
+  Player    getPlayerâ(UUID id)
+  Player    getPlayerExactâ(String name)
+  UUID    getPlayerUniqueIdâ(String playerName)
+  PluginCommand    getPluginCommandâ(String name)
+  PluginManager    getPluginManager()
+  """
+  port: Int!
+  """
+  Recipe    getRecipeâ(NamespacedKey recipeKey)
+  List<Recipe>    getRecipesForâ(ItemStack result)
+  ScoreboardManager    getScoreboardManager()
+  CachedServerIcon    getServerIcon()
+  ServicesManager    getServicesManager()
+  """
+  shutdownMessage: String!
+  spawnRadius: Int!
+  """
+  Tag<T>    getTagâ(String registry, NamespacedKey tag, Class<T> clazz)
+  Iterable<Tag<T>>    getTagsâ(String registry, Class<T> clazz)
+  """
+  ticksPerAmbientSpawns: Int!
+  ticksPerAnimalSpawns: Int!
+  ticksPerMonsterSpawns: Int!
+  ticksPerWaterAmbientSpawns: Int!
+  ticksPerWaterSpawns: Int!
+  """
+  long[]    getTickTimes()
+  double[]    getTPS()
+  """
+  updateFolder: String!
+  "    File	getUpdateFolderFile()"
+  version: String!
+  viewDistance: Int!
+  "    Warning.WarningState	getWarningState()"
+  waterAmbientSpawnLimit: Int!
+  waterAnimalSpawnLimit: Int!
+  " Uses custom data fetcher"
+  whitelistedPlayers: [OfflinePlayer!]
+  world(name: String = "world"): World!
+  worldType: String!
+  worlds: [World!]
 }
 
 type WhitelistMutation {
-    add(name: String!): OfflinePlayer
-    remove(name: String!): OfflinePlayer
+  add(name: String!): OfflinePlayer
+  remove(name: String!): OfflinePlayer
 }
 
 type WhitelistQuery {
-    players: [OfflinePlayer!]
+  players: [OfflinePlayer!]
 }
 
 type World {
-    allowAnimals: Boolean!
-    name: String!
+  allowAnimals: Boolean!
+  name: String!
 }

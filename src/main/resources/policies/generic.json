@@ -3,13 +3,7 @@
     {
       "name": "Server Permissions",
       "effect": "Allow",
-      "attributes": [
-        "Server.name",
-        "Server.motd",
-        "Server.bukkitVersion",
-        "Server.maxPlayers",
-        "Server.onlinePlayers"
-      ]
+      "attributes": ["Server.name", "Server.motd", "Server.bukkitVersion", "Server.maxPlayers", "Server.onlinePlayers"]
     },
     {
       "name": "Player Permissions",
@@ -26,9 +20,7 @@
     {
       "name": "Whitelist Permissions",
       "effect": "Allow",
-      "attributes": [
-        "WhitelistQuery.players"
-      ]
+      "attributes": ["WhitelistQuery.players"]
     }
   ]
 }

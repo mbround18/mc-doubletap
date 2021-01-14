@@ -1,0 +1,25 @@
+{
+  "name": "mc-doubletap",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:mbround18/mc-doubletap.git",
+  "author": "mbround18 <12646562+mbround18@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "prettier --write \"**/*.{java,gql,html,json}\""
+  },
+  "prettier": {
+    "endOfLine": "lf",
+    "printWidth": 120
+  },
+  "devDependencies": {
+    "husky": "^4.3.7",
+    "prettier": "^2.2.1",
+    "prettier-plugin-java": "^1.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  }
+}

@@ -6,7 +6,7 @@ services:
     restart: "no"
     volumes:
       - ./src:/data/src
-      - plugins:/data/build/libs
+      - ./tmp/plugins:/data/build/libs
 
   mc-server:
     image: itzg/minecraft-server:adopt11
@@ -19,11 +19,8 @@ services:
     - 25565:25565
     - 8101:8101
     volumes:
-    - ./tmp/server:/data
-    - plugins:/data/plugins
+    - ./tmp/server:/data:rw
+    - ./tmp/plugins:/data/plugins
     restart: "no"
     depends_on:
       - "mc-doubletap"
-
-volumes:
-  plugins:

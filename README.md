@@ -17,10 +17,42 @@ This plugin uses bstats for metrics, check out the bstats page at `https://bstat
 - Start or Restart the server. 
 - Edit the file located at: `./plugins/Doubletap/config.json`
 
-> Currently, the config.json starts with a base authorizer as default. I suggest you change this to your liking. 
-> What I have done is use Keycloak for my role authorizer. 
-> What you could do is put the graphql interface behind http basic auth and make admin the base. 
-> Or perhaps, use netlify or keycloak. 
+> Currently, the config.json starts with a base authorizer as default. I suggest you change this to discord.
+
+#### Discord Authorizer Setup
+
+> Using discord as an authorizer means, 
+> any role you have in discord is attributed to roles that exist in the `/your/server/path/plugins/Doubletap/policies` folder.
+> This means that, if you have a policy called `admin.json` in that folder. It expects users to have an `admin` role assigned to them.
+> 
+> Note: Any special characters or spaces will be replaced with a `-` which means `MC Game Master` would map to `mc-game-master.json` 
+
+1. Navigate to `https://discord.com/developers/applications`
+2. Create an application. 
+3. Copy the Client ID and Client Secret for use with the panel. 
+4. Click the Bot section.
+5. Create a bot.
+6. Copy the Bot token to a notepad for now
+7. Open discord
+8. Click on copy ID
+   ![Discord Context Menu](./docs/assets/discord-context-menu.png)
+   
+  > We have you copy your server ID for security reasons. This ensures that your bot simply cannot be added to any given server and have roles faked. 
+9. Modify your `config.json` in `/your/server/path/plugins/Doubletap/config.json`: 
+  ```json
+  {
+    "port": 8101,
+    "authorizer": "discord",
+    "authorizerOptions": {
+      "DISCORD_SERVER_ID": "Your Server Id",
+      "DISCORD_BOT_TOKEN": "Your Bot Token"
+    }
+  }
+  ```
+  > The variables `DISCORD_SERVER_ID` & `DISCORD_BOT_TOKEN` can also be provided as environment variables. They do not need to be hard coded into a config file. 
+10. Restart your server with the new config.
+11. Invite your bot to your server! 
+    > Navigate to `http://your-server-ip:8101/discord/bot`
 
 ## Query Examples
 
@@ -40,15 +72,14 @@ This plugin uses bstats for metrics, check out the bstats page at `https://bstat
 
 I was inspired by the following plugins: 
 
-- [Server Tap](https://servertap.io/) 
-  
-    This project inspired me to explore other options, I landed on graphql and its implementation because these beans are awesome! 
-  
 - [BlueMap](https://github.com/BlueMap-Minecraft/BlueMap)
 
-    These guys are freaking awesome! Blue the owner has been super helpful in discussion, and the plugin BlueMap is a superb plugin. 
-    I just wanted to see if I could take the API concept a step further.
+  These guys are freaking awesome! Blue the owner has been super helpful in discussion, and the plugin BlueMap is a superb plugin.
+  I just wanted to see if I could take the API concept a step further.
+
+- [Server Tap](https://servertap.io/) 
   
+    This project inspired me to explore other options, I landed on graphql and its implementation because these beans are awesome!
 
 ### Things I like
 
@@ -70,7 +101,7 @@ I was inspired by the following plugins:
 
 ### Completed Plans
 
-- Currently, I will enable harmless endpoints for information and limit what is publicly available.
-- I intend to implement policy based authorization, which in turn will allow operators to design auth schemas for people who are signed in.
-- Authentication will be enforced via JWT or similar authorization structure. With the end goal of making authorization simple to implement on a frontend or server to server application.
+- Enable harmless endpoints for information and limit what is publicly available.
+- Implement policy based authorization, which in turn will allow operators to design auth schemas for people who are signed in.
+- Enforce authentication via JWT or similar authorization structure. With the end goal of making authorization simple to implement on a frontend or server to server application.
 
