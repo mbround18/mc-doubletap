@@ -9,15 +9,14 @@ import doubletap.boop.ninja.doubletap.External.DiscordBot;
 import doubletap.boop.ninja.doubletap.Integrations.Base.BaseIntegration;
 import doubletap.boop.ninja.doubletap.Integrations.Server.ServerIntegration;
 import doubletap.boop.ninja.doubletap.Utils.FileResourceUtils;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Locale;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Locale;
 
 public final class Doubletap extends JavaPlugin {
 
@@ -32,9 +31,7 @@ public final class Doubletap extends JavaPlugin {
     port(portNumber); // Spark will run on port 8080
     enableCors();
     get("/", (req, res) -> getServer().getMotd());
-    get("/feature-flags", ((request, response) ->
-      new Gson().toJson(featureFlags)
-    ));
+    get("/feature-flags", ((request, response) -> new Gson().toJson(featureFlags)));
     notFound(
       (req, res) -> {
         res.type("application/json");
@@ -56,11 +53,7 @@ public final class Doubletap extends JavaPlugin {
 
   private BaseIntegration loadLocalIntegration(final String klassName) {
     try {
-      String klassPath = format(
-              "doubletap.boop.ninja.doubletap.Integrations.%s.%sIntegration",
-              klassName,
-              klassName
-      );
+      String klassPath = format("doubletap.boop.ninja.doubletap.Integrations.%s.%sIntegration", klassName, klassName);
       return (BaseIntegration) Class.forName(klassPath).getDeclaredConstructor().newInstance();
     } catch (
       InstantiationException
