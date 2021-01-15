@@ -6,8 +6,8 @@ import static java.lang.String.format;
 
 import doubletap.boopninja.doubletap.Authorizors.Base.Policy;
 import doubletap.boopninja.doubletap.Authorizors.Discord.DiscordMe;
-import doubletap.boopninja.doubletap.Utils.HttpHelper;
 import doubletap.boopninja.doubletap.External.DiscordBot;
+import doubletap.boopninja.doubletap.Utils.HttpHelper;
 import java.net.http.HttpRequest;
 import java.util.Arrays;
 
