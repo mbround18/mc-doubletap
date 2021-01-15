@@ -1,4 +1,4 @@
-package doubletap.boop.ninja.doubletap.Controllers.Graphql;
+package doubletap.boop.ninja.doubletap.Integrations.Base;
 
 import doubletap.boop.ninja.doubletap.Authorizors.Base.Role;
 import doubletap.boop.ninja.doubletap.Errors.RestrictedPermissionNode;
@@ -7,11 +7,11 @@ import graphql.schema.GraphQLFieldsContainer;
 import graphql.schema.visibility.GraphqlFieldVisibility;
 import java.util.List;
 
-public class CustomFieldVisibility implements GraphqlFieldVisibility {
+public class PolicySecurityFieldVisibility implements GraphqlFieldVisibility {
 
   private final Role role;
 
-  public CustomFieldVisibility(Role role) {
+  public PolicySecurityFieldVisibility(Role role) {
     this.role = role;
   }
 

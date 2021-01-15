@@ -1,4 +1,4 @@
-package doubletap.boop.ninja.doubletap.Queries;
+package doubletap.boop.ninja.doubletap.Integrations.Server.Queries;
 
 import static org.bukkit.Bukkit.getServer;
 

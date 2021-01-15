@@ -45,7 +45,7 @@ public class DiscordAuthorizer extends BaseAuthorizer {
   @Override
   public Policy[] authenticate(Object context) {
     if (context == null || context.toString() == null) {
-      return fetchPolicies("generic");
+      return null;
     }
     String userId = fetchUserId(context.toString());
     return fetchRoles(userId);

@@ -19,6 +19,9 @@ public class KeycloakAuthorizer extends BaseAuthorizer {
 
   @Override
   public Policy[] authenticate(Object context) {
+    if (context == null || context.toString() == null) {
+      return null;
+    }
     String jwt = context.toString();
     if (!jwt.startsWith("Bearer")) {
       throw new GraphQLException("Token did not include prefix!");

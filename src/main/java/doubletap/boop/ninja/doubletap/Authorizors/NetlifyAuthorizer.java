@@ -10,6 +10,9 @@ import java.util.Arrays;
 public class NetlifyAuthorizer extends BaseAuthorizer {
 
   public Policy[] authenticate(Object context) {
+    if (context == null || context.toString() == null) {
+      return null;
+    }
     DecodedJWT jwt = JWT.decode(context.toString());
     NetlifyJWT payload = new Gson().fromJson(jwt.getPayload(), NetlifyJWT.class);
     return (Policy[]) Arrays.stream(payload.roles).map(this::fetchPolicies).flatMap(Arrays::stream).toArray();

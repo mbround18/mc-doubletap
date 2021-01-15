@@ -1,5 +1,7 @@
 package doubletap.boop.ninja.doubletap.Authorizors;
 
+import static doubletap.boop.ninja.doubletap.Doubletap.config;
+
 import com.google.gson.Gson;
 import doubletap.boop.ninja.doubletap.Authorizors.Base.Policy;
 import doubletap.boop.ninja.doubletap.Authorizors.Base.Role;
@@ -10,7 +12,11 @@ public class BaseAuthorizer {
   public Gson gson = new Gson();
 
   public Policy[] authenticate(Object context) {
-    return fetchPolicies("generic");
+    return fetchDefaultPolicies();
+  }
+
+  public Policy[] fetchDefaultPolicies() {
+    return fetchPolicies(config.getDefaultPolicyName());
   }
 
   public Policy[] fetchPolicies(String roleName) {

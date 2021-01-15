@@ -1,51 +1,48 @@
-package doubletap.boop.ninja.doubletap.Controllers;
+package doubletap.boop.ninja.doubletap.Integrations.Base;
 
 import static doubletap.boop.ninja.doubletap.Doubletap.config;
-import static doubletap.boop.ninja.doubletap.Doubletap.logger;
+import static java.lang.String.format;
 import static spark.Spark.*;
 
 import com.google.gson.Gson;
 import doubletap.boop.ninja.doubletap.Authorizors.Base.Policy;
-import doubletap.boop.ninja.doubletap.Authorizors.BaseAuthorizer;
-import doubletap.boop.ninja.doubletap.Authorizors.DiscordAuthorizer;
-import doubletap.boop.ninja.doubletap.Authorizors.KeycloakAuthorizer;
-import doubletap.boop.ninja.doubletap.Authorizors.NetlifyAuthorizer;
-import doubletap.boop.ninja.doubletap.Controllers.Graphql.LocalRuntimeWiring;
+import doubletap.boop.ninja.doubletap.Integrations.Base.Interfaces.BaseIntegrationInterface;
 import doubletap.boop.ninja.doubletap.Utils.FileResourceUtils;
 import graphql.*;
 import graphql.schema.GraphQLSchema;
-import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.jetbrains.annotations.NotNull;
-import spark.ModelAndView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
-import spark.template.mustache.MustacheTemplateEngine;
 
-public class GraphqlController {
+public class BaseIntegration implements BaseIntegrationInterface {
 
-  private final Gson formatter = new Gson();
-  private final SchemaGenerator schemaGenerator;
   private final TypeDefinitionRegistry typeRegistry;
+  private final SchemaGenerator schemaGenerator;
+  private final SessionManager sessionManager = new SessionManager();
+  private final String schemaName;
+  private final Gson formatter = new Gson();
+  private final Logger logger;
 
-  public GraphqlController() {
+  public BaseIntegration(String schemaName) {
+    this.schemaName = schemaName;
+    this.logger = LoggerFactory.getLogger(format("Doubletap.%s", schemaName));
     SchemaParser schemaParser = new SchemaParser();
     this.schemaGenerator = new SchemaGenerator();
 
-    InputStream schema = FileResourceUtils.getFileFromResourceAsStream("schema.gql");
+    InputStream schema = FileResourceUtils.getFileFromResourceAsStream(format("schema/%s.graphql", schemaName));
     this.typeRegistry = schemaParser.parse(schema);
 
-    routeMap();
     exceptionMap();
-  }
-
-  private void routeMap() {
-    get("", this::parseGraphqlGet, new MustacheTemplateEngine());
-    post("", this::parseGraphqlPost);
   }
 
   private void exceptionMap() {
@@ -66,46 +63,8 @@ public class GraphqlController {
     }
   }
 
-  private BaseAuthorizer getAuthorizer() {
-    String authorizerName = config.getAuthorizer();
-    authorizerName = authorizerName.toLowerCase(Locale.ROOT);
-    switch (authorizerName) {
-      case "netlify":
-        return new NetlifyAuthorizer();
-      case "keycloak":
-        return new KeycloakAuthorizer();
-      case "discord":
-        return new DiscordAuthorizer();
-    }
-    return new BaseAuthorizer();
-  }
-
-  private void createSessionIfNotExist(Request request) {
-    // TODO: Refactor if a future authorizer requires a different context.
-    String token = request.headers("authorization");
-    if (token == null) token = request.headers("Authorization");
-
-    Policy[] policies = request.session().attribute("policies");
-
-    if (token != null && policies != null) {
-      request.session().invalidate();
-      policies = null;
-    }
-
-    if (policies == null) {
-      request.session(true);
-      BaseAuthorizer authorizer = getAuthorizer();
-      request.session().attribute("policies", authorizer.authenticate(token));
-    }
-  }
-
-  public ModelAndView parseGraphqlGet(@NotNull Request request, @NotNull Response response) {
-    createSessionIfNotExist(request);
-    return new ModelAndView(new HashMap<String, String>(), "graphiql.html");
-  }
-
-  public String parseGraphqlPost(@NotNull Request request, @NotNull Response response) {
-    createSessionIfNotExist(request);
+  private String parseGraphqlPost(@NotNull Request request, @NotNull Response response) {
+    sessionManager.createSessionIfNotExist(request);
     response.type("application/json");
 
     Policy[] policies = request.session().attribute("policies");
@@ -120,12 +79,11 @@ public class GraphqlController {
     logGraphQLRequest(gqlRequest);
 
     // Generate schema build and execute it for results
-    RuntimeWiring wiring = new LocalRuntimeWiring().Build(policies);
-    GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(typeRegistry, wiring);
+    GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(typeRegistry, wiring().Build(policies));
     GraphQL build = GraphQL.newGraphQL(graphQLSchema).build();
     ExecutionResult executionResult = build.execute(gqlRequest);
 
-    // Collect results and output data
+    /* Collect results and output data */
     Map<String, Object> results = new HashMap<>();
     results.put("data", executionResult.getData());
     List<GraphQLError> errors = executionResult.getErrors();
@@ -154,5 +112,12 @@ public class GraphqlController {
       messages.add(variables);
     }
     logger.debug(String.join("\n", messages));
+  }
+
+  public void Build() {
+    String schemaPath = format("/%s", schemaName);
+    logger.info(format("Enabling Integration %s", schemaName));
+    path(schemaPath, () -> post("/graphql", this::parseGraphqlPost));
+    logger.info(format("Enabled Integration %s", schemaName));
   }
 }

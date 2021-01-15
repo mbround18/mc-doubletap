@@ -1,28 +1,24 @@
-package doubletap.boop.ninja.doubletap.Controllers.Graphql;
+package doubletap.boop.ninja.doubletap.Integrations.Server;
 
 import static org.bukkit.Bukkit.getPlayer;
 import static org.bukkit.Bukkit.getServer;
 
 import doubletap.boop.ninja.doubletap.Authorizors.Base.Policy;
-import doubletap.boop.ninja.doubletap.Authorizors.Base.Role;
-import doubletap.boop.ninja.doubletap.Mutations.WhitelistMutations;
-import doubletap.boop.ninja.doubletap.Queries.OfflinePlayerFetcher;
-import doubletap.boop.ninja.doubletap.Queries.ServerFetcher;
-import doubletap.boop.ninja.doubletap.Queries.WorldFetcher;
+import doubletap.boop.ninja.doubletap.Integrations.Base.Interfaces.RuntimeWiringInterface;
+import doubletap.boop.ninja.doubletap.Integrations.Server.Mutations.WhitelistMutations;
+import doubletap.boop.ninja.doubletap.Integrations.Server.Queries.OfflinePlayerFetcher;
+import doubletap.boop.ninja.doubletap.Integrations.Server.Queries.ServerFetcher;
+import doubletap.boop.ninja.doubletap.Integrations.Server.Queries.WorldFetcher;
 import graphql.schema.PropertyDataFetcher;
 import graphql.schema.idl.TypeRuntimeWiring;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
-public class LocalRuntimeWiring {
+public class ServerRuntimeWiring implements RuntimeWiringInterface {
 
+  @Override
   public graphql.schema.idl.RuntimeWiring Build(@NotNull Policy[] policies) {
-    Role configuredRole = new Role();
-    configuredRole.policies = policies;
-    CustomFieldVisibility cfv = new CustomFieldVisibility(configuredRole);
-    return graphql.schema.idl.RuntimeWiring
-      .newRuntimeWiring()
-      .fieldVisibility(cfv)
+    return newRuntimeWiringWithSecurity(policies)
       .type("QueryType", this::queryType)
       .type("MutationType", this::mutationType)
       .type("Server", this::serverType)

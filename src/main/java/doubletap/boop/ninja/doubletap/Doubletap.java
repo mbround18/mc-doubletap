@@ -1,22 +1,29 @@
 package doubletap.boop.ninja.doubletap;
 
+import static java.lang.String.format;
 import static spark.Spark.*;
 
 import com.google.gson.Gson;
-import doubletap.boop.ninja.doubletap.Controllers.GraphqlController;
 import doubletap.boop.ninja.doubletap.Entities.Config;
 import doubletap.boop.ninja.doubletap.External.DiscordBot;
+import doubletap.boop.ninja.doubletap.Integrations.Base.BaseIntegration;
+import doubletap.boop.ninja.doubletap.Integrations.Server.ServerIntegration;
 import doubletap.boop.ninja.doubletap.Utils.FileResourceUtils;
-import java.util.Locale;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Locale;
 
 public final class Doubletap extends JavaPlugin {
 
   public static Config config = null;
   public static final Logger logger = LoggerFactory.getLogger("Doubletap");
+  private final HashMap<String, Boolean> featureFlags = new HashMap<>();
 
   private void startupWebserver(int portNumber) {
     staticFiles.externalLocation(FileResourceUtils.PluginDirectory);
@@ -25,8 +32,9 @@ public final class Doubletap extends JavaPlugin {
     port(portNumber); // Spark will run on port 8080
     enableCors();
     get("/", (req, res) -> getServer().getMotd());
-    path("/graphql", GraphqlController::new);
-
+    get("/feature-flags", ((request, response) ->
+      new Gson().toJson(featureFlags)
+    ));
     notFound(
       (req, res) -> {
         res.type("application/json");
@@ -43,7 +51,47 @@ public final class Doubletap extends JavaPlugin {
       }
     );
 
-    logger.info(String.format("Server Initialized! Navigate to http://127.0.0.1:%s/graphql", portNumber));
+    logger.info(format("Server Initialized! Navigate to http://127.0.0.1:%s/graphql", portNumber));
+  }
+
+  private BaseIntegration loadLocalIntegration(final String klassName) {
+    try {
+      String klassPath = format(
+              "doubletap.boop.ninja.doubletap.Integrations.%s.%sIntegration",
+              klassName,
+              klassName
+      );
+      return (BaseIntegration) Class.forName(klassPath).getDeclaredConstructor().newInstance();
+    } catch (
+      InstantiationException
+      | IllegalAccessException
+      | ClassNotFoundException
+      | NoSuchMethodException
+      | InvocationTargetException e
+    ) {
+      if (config.debug) {
+        logger.error(format("Integration for %s not found!", klassName));
+      }
+      return null;
+    }
+  }
+
+  private void loadIntegrations() {
+    new ServerIntegration().Build();
+    featureFlags.put("server", true);
+
+    Plugin[] plugins = getServer().getPluginManager().getPlugins();
+    for (Plugin plugin : plugins) {
+      String name = plugin.getName();
+      if (name.equals("Doubletap")) {
+        continue;
+      }
+      BaseIntegration klass = this.loadLocalIntegration(name);
+      if (klass != null) {
+        featureFlags.put(name, true);
+        klass.Build();
+      }
+    }
   }
 
   private void setupPluginFiles() {
@@ -54,18 +102,17 @@ public final class Doubletap extends JavaPlugin {
       }
     }
     FileResourceUtils.PluginDirectory = getDataFolder().getPath();
-
     String overwriteEnvVar = System.getenv("MC_DOUBLETAP_OVERWRITE");
-
     Boolean overwrite = false;
     if (overwriteEnvVar != null) {
       overwrite = "true".equals(overwriteEnvVar.toLowerCase(Locale.ROOT));
     }
-
     FileResourceUtils.copyResourceToPluginDir(configPath, overwrite);
+    Doubletap.config = FileResourceUtils.pluginFileToClass(configPath, Config.class);
+
     FileResourceUtils.copyResourceToPluginDir("policies/admin.json", overwrite);
     FileResourceUtils.copyResourceToPluginDir("policies/generic.json", overwrite);
-    Doubletap.config = FileResourceUtils.pluginFileToClass(configPath, Config.class);
+    FileResourceUtils.copyResourceToPluginDir("schema/config.schema.json", overwrite);
   }
 
   @Override
@@ -84,8 +131,9 @@ public final class Doubletap extends JavaPlugin {
     }
 
     // Initiate webserver
-    logger.info(String.format("Loaded config %n%s", new Gson().toJson(config)));
+    logger.info(format("Loaded config %n%s", new Gson().toJson(config)));
     startupWebserver(config.port);
+    loadIntegrations();
 
     // Start bot if needed, will not start if you dont have discord as an authorizer
     DiscordBot.start();

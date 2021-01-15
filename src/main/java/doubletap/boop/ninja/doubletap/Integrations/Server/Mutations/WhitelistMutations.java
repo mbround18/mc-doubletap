@@ -1,4 +1,4 @@
-package doubletap.boop.ninja.doubletap.Mutations;
+package doubletap.boop.ninja.doubletap.Integrations.Server.Mutations;
 
 import static doubletap.boop.ninja.doubletap.Doubletap.logger;
 import static doubletap.boop.ninja.doubletap.External.MojangAPI.fetchPlayerByName;

@@ -101,20 +101,18 @@ type Server {
   monsterSpawnLimit: Int!
   motd: String!
   name: String!
-  """
-  OfflinePlayer    getOfflinePlayerâ(UUID id)
-  OfflinePlayer    getOfflinePlayerIfCachedâ(String name)
-  OfflinePlayer[]    getOfflinePlayers()
-  """
+
+  "Returns a list of players who have joined the server."
+  getOfflinePlayers: [OfflinePlayer!]
+
+  "Whether or not the server is online"
   onlineMode: Boolean!
+
+  ""
   onlinePlayers: [Player!]
-  "    Set<OfflinePlayer>	getOperators()"
+  getOperators: [OfflinePlayer!]
   permissionMessage: String!
   """
-  Player    getPlayerâ(String name)
-  Player    getPlayerâ(UUID id)
-  Player    getPlayerExactâ(String name)
-  UUID    getPlayerUniqueIdâ(String playerName)
   PluginCommand    getPluginCommandâ(String name)
   PluginManager    getPluginManager()
   """
@@ -148,8 +146,7 @@ type Server {
   "    Warning.WarningState	getWarningState()"
   waterAmbientSpawnLimit: Int!
   waterAnimalSpawnLimit: Int!
-  " Uses custom data fetcher"
-  whitelistedPlayers: [OfflinePlayer!]
+
   world(name: String = "world"): World!
   worldType: String!
   worlds: [World!]
