@@ -40,7 +40,11 @@ type Player {
   foodLevel: Int!
   " Uses Custom Fetcher"
   hasResourcePack: Boolean!
+
+  health: Float!
+  maxHealth: Float!
   healthScale: Float!
+
   " Uses Custom Fetcher"
   isBanned: Boolean!
   " Uses Custom Fetcher"
@@ -53,8 +57,9 @@ type Player {
   location: Location!
   " Uses Custom Fetcher"
   name: String!
-  playTime: Float!
+  playTime: Float
   timeOffset: Float!
+
 }
 
 type QueryType {
