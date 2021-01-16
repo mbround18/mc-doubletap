@@ -15,6 +15,8 @@ services:
       TYPE: "PAPER"
       REPLACE_ENV_VARIABLES: "TRUE"
       MC_DOUBLETAP_OVERWRITE: "true"
+    env_file:
+      - .env
     ports:
     - 25565:25565
     - 8101:8101
