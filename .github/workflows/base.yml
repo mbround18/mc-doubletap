@@ -37,3 +37,24 @@ jobs:
           files: |
             build/libs/*.jar
             README.md
+
+#   publish:
+#     runs-on: ubuntu-latest
+#     needs: build
+#     container: gradle:jdk11
+#     steps:
+#       - name: Checkout latest code
+#         uses: actions/checkout@v1
+
+#       - name: Publish artifact
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+#         # The GITHUB_REF tag comes in the format 'refs/tags/xxx'.
+#         # If we split on '/' and take the 3rd value,
+#         # we can get the release name.
+#         run: |
+#           NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
+#           echo "New version: ${NEW_VERSION}"
+#           echo "Github username: ${GITHUB_ACTOR}"
+#           gradle -Pversion=${NEW_VERSION} publish

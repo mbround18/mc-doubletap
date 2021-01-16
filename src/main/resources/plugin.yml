@@ -1,6 +1,6 @@
 name: Doubletap
 version: "${version}"
-main: doubletap.boop.ninja.doubletap.Doubletap
+main: doubletap.boopninja.doubletap.Doubletap
 api-version: 1.16
 load: STARTUP
 authors: [ mbround18 ]
