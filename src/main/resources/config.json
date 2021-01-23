@@ -1,10 +1,9 @@
 {
-  "$schema": "schema/config.schema.json",
   "port": 8101,
   "debug": false,
-  "authorizer": "discord",
+  "authorizer": "base",
   "authorizerOptions": {
-    "DISCORD_SERVER_ID": "See Readme",
-    "DISCORD_BOT_TOKEN": "See Readme"
+    "host": "SEE README",
+    "realm": "SEE README"
   }
 }

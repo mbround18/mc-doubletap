@@ -21,7 +21,10 @@ public class PolicySecurityFieldVisibility implements GraphqlFieldVisibility {
   }
 
   @Override
-  public GraphQLFieldDefinition getFieldDefinition(GraphQLFieldsContainer fieldsContainer, String fieldName) {
+  public GraphQLFieldDefinition getFieldDefinition(
+    GraphQLFieldsContainer fieldsContainer,
+    String fieldName
+  ) {
     String node = String.join(".", fieldsContainer.getName(), fieldName);
     GraphQLFieldDefinition definition = fieldsContainer.getFieldDefinition(fieldName);
     if (this.role.isBaseNode(node)) {
@@ -30,6 +33,8 @@ public class PolicySecurityFieldVisibility implements GraphqlFieldVisibility {
     if (this.role.isAllowed(node)) {
       return definition;
     }
-    throw new RestrictedPermissionNode(String.format("You do not have access to the permission node %s", node));
+    throw new RestrictedPermissionNode(
+      String.format("You do not have access to the permission node %s", node)
+    );
   }
 }

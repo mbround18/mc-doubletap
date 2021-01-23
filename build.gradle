@@ -1,40 +1,20 @@
 plugins {
     id 'java'
     id "com.github.node-gradle.node" version "2.2.4"
-    id("maven-publish")
-
 }
 
+group = 'doubletap.boop.ninja'
+version = '1.0-SNAPSHOT'
 
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/mbround18/mc-doubletap")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
+compileJava   {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 task lint(type: YarnTask) {
+    // add the express package only
     args = ['lint']
-}
-
-compileJava   {
-    doFirst {
-        lint
-    }
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
 }
 
 repositories {
@@ -67,10 +47,9 @@ jar {
     }
 }
 
-
 dependencies {
     implementation 'org.jetbrains:annotations:20.1.0'
-    compileOnly 'com.destroystokyo.paper:paper-api:1.16.4-R0.1-SNAPSHOT'
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
 
     // Libs to be included on publication of jar
     extraLibs group: "org.bstats", name: "bstats-bukkit", version: "1.7"
@@ -78,25 +57,25 @@ dependencies {
     extraLibs group: "com.sparkjava", name: "spark-template-mustache", version: "2.7.1"
     extraLibs group: "com.graphql-java", name: "graphql-java", version: "16.1"
     extraLibs group: 'com.auth0', name: 'java-jwt', version: '3.12.0'
-    extraLibs group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
-    extraLibs (group: 'net.dv8tion', name: 'JDA', version: '4.2.0_227')  {
+    extraLibs ('net.dv8tion:JDA:4.2.0_168') {
         exclude module: 'opus-java'
     }
 
     configurations.compile.extendsFrom(configurations.extraLibs)
 }
 
+
 processResources {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     // This will ensure that this task is redone when the versions change.
-    inputs.property 'version', project.version
+    inputs.property 'version', version
 
     // Replace stuff in mods.toml, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'plugin.yml'
 
         // Replace version
-        expand 'version': project.version
+        expand 'version': version
     }
 
     // Copy everything else except the mods.toml
@@ -104,7 +83,3 @@ processResources {
         exclude 'plugin.yml'
     }
 }
-
-
-
-

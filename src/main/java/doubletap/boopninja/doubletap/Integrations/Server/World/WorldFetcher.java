@@ -1,4 +1,4 @@
-package doubletap.boopninja.doubletap.Integrations.Server.Queries;
+package doubletap.boopninja.doubletap.Integrations.Server.World;
 
 import static org.bukkit.Bukkit.getWorld;
 

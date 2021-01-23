@@ -17,12 +17,18 @@ public class KeycloakJWT {
   private URI keycloakHost() {
     String hostname = Doubletap.config.authorizerOptions.get("host");
     String realm = Doubletap.config.authorizerOptions.get("realm");
-    return URI.create(String.format("%s/auth/realms/%s/protocol/openid-connect/userinfo", hostname, realm));
+    return URI.create(
+      String.format("%s/auth/realms/%s/protocol/openid-connect/userinfo", hostname, realm)
+    );
   }
 
   public boolean isValid(String fullJWT) {
     HttpClient client = HttpClient.newHttpClient();
-    HttpRequest request = HttpRequest.newBuilder().uri(keycloakHost()).header("Authorization", fullJWT).build();
+    HttpRequest request = HttpRequest
+      .newBuilder()
+      .uri(keycloakHost())
+      .header("Authorization", fullJWT)
+      .build();
     try {
       HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
       return response.statusCode() == 200;

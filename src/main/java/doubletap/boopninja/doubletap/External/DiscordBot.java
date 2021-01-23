@@ -19,7 +19,7 @@ import net.dv8tion.jda.api.entities.User;
 
 public class DiscordBot {
 
-  private static final Boolean enabled = "discord".equals(config.authorizer);
+  private static final Boolean enabled = "discord".equals(config.getAuthorizer());
   private static final String token = config.getAuthorizerOption("DISCORD_BOT_TOKEN");
   private static final String guildId = config.getAuthorizerOption("DISCORD_SERVER_ID");
 
@@ -34,6 +34,10 @@ public class DiscordBot {
       logger.info("[DiscordBot]: Initializing");
       try {
         setClient(JDABuilder.createDefault(token).build());
+        if (client == null) {
+          throw new IllegalStateException("Discord bot failed to initialize");
+        }
+
         String inviteUrl = client.getInviteUrl(Permission.getFromOffset(3072));
 
         get(
@@ -81,12 +85,20 @@ public class DiscordBot {
     if (user == null) {
       throw new GraphQLException("User provided is null! This should not happen!");
     }
-    Member member = guild.retrieveMember(user).complete();
-    if (member == null) {
-      String errorMessage = format("%s was not found! Do you belong to the %s?", user.getName(), guild.getName());
-      throw new GraphQLException(errorMessage);
+    try {
+      Member member = guild.retrieveMember(user).complete();
+      if (member == null) {
+        String errorMessage = format(
+          "%s was not found! Do you belong to the %s?",
+          user.getName(),
+          guild.getName()
+        );
+        throw new GraphQLException(errorMessage);
+      }
+      return member;
+    } catch (net.dv8tion.jda.api.exceptions.ErrorResponseException error) {
+      throw new GraphQLException("Discord bot internal server error!");
     }
-    return member;
   }
 
   public static String[] getRoleNames(String userId) {

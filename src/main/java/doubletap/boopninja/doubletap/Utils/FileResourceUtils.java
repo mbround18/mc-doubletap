@@ -30,7 +30,10 @@ public class FileResourceUtils {
     }
   }
 
-  public static void copyResourceToPluginDir(@NotNull String resourceName, @NotNull Boolean overwrite) {
+  public static void copyResourceToPluginDir(
+    @NotNull String resourceName,
+    @NotNull Boolean overwrite
+  ) {
     assert PluginDirectory != null;
     try {
       InputStream resourceFile = getFileFromResourceAsStream(resourceName);
@@ -66,7 +69,9 @@ public class FileResourceUtils {
     try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
       stream.forEach(s -> contentBuilder.append(s).append("\n"));
     } catch (UncheckedIOException | IOException e) {
-      logger.error(String.format("Exception! %s%nIssue occurred when parsing: %s", e.getMessage(), filePath));
+      logger.error(
+        String.format("Exception! %s%nIssue occurred when parsing: %s", e.getMessage(), filePath)
+      );
       e.printStackTrace();
     }
     return contentBuilder.toString();

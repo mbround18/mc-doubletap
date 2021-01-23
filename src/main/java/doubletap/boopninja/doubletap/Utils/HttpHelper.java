@@ -27,10 +27,19 @@ public class HttpHelper {
 
   private static String parseResponse(HttpRequest request, HttpResponse<String> response) {
     if (config.debug) {
-      logger.info(String.format("%s %s %n%s", request.uri().toString(), response.statusCode(), response.body()));
+      logger.info(
+        String.format(
+          "%s %s %n%s",
+          request.uri().toString(),
+          response.statusCode(),
+          response.body()
+        )
+      );
     }
     if (response.statusCode() != 200) {
-      throw new GraphQLException(format("[DiscordAPI][%s]: %s", response.statusCode(), response.body()));
+      throw new GraphQLException(
+        format("[DiscordAPI][%s]: %s", response.statusCode(), response.body())
+      );
     }
     return response.body();
   }

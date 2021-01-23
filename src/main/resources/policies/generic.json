@@ -3,7 +3,13 @@
     {
       "name": "Server Permissions",
       "effect": "Allow",
-      "attributes": ["Server.name", "Server.motd", "Server.bukkitVersion", "Server.maxPlayers", "Server.onlinePlayers"]
+      "attributes": [
+        "Server.name",
+        "Server.motd",
+        "Server.bukkitVersion",
+        "Server.maxPlayers",
+        "Server.onlinePlayers"
+      ]
     },
     {
       "name": "Player Permissions",

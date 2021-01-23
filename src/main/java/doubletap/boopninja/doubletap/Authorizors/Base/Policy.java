@@ -11,7 +11,12 @@ public class Policy {
 
   public boolean matchesAttribute(String node) {
     return (
-      Arrays.stream(attributes).filter(patternNode -> this.validateRegex(patternNode, node)).toArray().length > 0
+      Arrays
+        .stream(attributes)
+        .filter(patternNode -> this.validateRegex(patternNode, node))
+        .toArray()
+        .length >
+      0
     );
   }
 
