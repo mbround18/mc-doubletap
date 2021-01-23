@@ -6,11 +6,12 @@
   "author": "mbround18 <12646562+mbround18@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "prettier --write \"**/*.{java,gql,html,json}\""
+    "lint": "prettier --write \"**/*.{java,gql,graphql,html,json}\"",
+    "dev": "gradle clean lint build && docker-compose up"
   },
   "prettier": {
     "endOfLine": "lf",
-    "printWidth": 120
+    "printWidth": 100
   },
   "devDependencies": {
     "husky": "^4.3.7",

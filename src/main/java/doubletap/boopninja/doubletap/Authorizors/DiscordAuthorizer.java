@@ -38,7 +38,10 @@ public class DiscordAuthorizer extends BaseAuthorizer {
       logger.info(format("[DiscordAPI][Token]: %s", token));
     }
     httpRequest.header("Authorization", token);
-    DiscordMe discordMe = gson.fromJson(HttpHelper.sendRequest(httpRequest.build()), DiscordMe.class);
+    DiscordMe discordMe = gson.fromJson(
+      HttpHelper.sendRequest(httpRequest.build()),
+      DiscordMe.class
+    );
     return discordMe.id;
   }
 

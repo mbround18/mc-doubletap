@@ -1,18 +1,37 @@
-# This file was generated based on ".graphqlconfig". Do not edit manually.
+# Setup
 
 schema {
   query: QueryType
   mutation: MutationType
 }
 
-type Location {
-  x: Int!
-  y: Int!
-  z: Int!
+type QueryType {
+  offlinePlayer(name: String!): OfflinePlayer
+  player(name: String!): Player
+  server: Server
+  whitelist: WhitelistQuery
+  world(name: String = "world"): World
 }
 
 type MutationType {
   whitelist: WhitelistMutation
+  player: PlayerMutations
+}
+
+# Query Types
+type WhitelistQuery {
+  players: [OfflinePlayer!]
+}
+
+type World {
+  allowAnimals: Boolean!
+  name: String!
+}
+
+type Location {
+  x: Int!
+  y: Int!
+  z: Int!
 }
 
 type OfflinePlayer {
@@ -38,36 +57,21 @@ type Player {
   exp: Float!
   flySpeed: Float!
   foodLevel: Int!
-  " Uses Custom Fetcher"
   hasResourcePack: Boolean!
-
   health: Float!
   maxHealth: Float!
   healthScale: Float!
-
-  " Uses Custom Fetcher"
   isBanned: Boolean!
-  " Uses Custom Fetcher"
   isFlying: Boolean!
-  " Uses Custom Fetcher"
   isOnline: Boolean!
-  " Uses Custom Fetcher"
   isWhitelisted: Boolean!
   locale: String!
   location: Location!
-  " Uses Custom Fetcher"
+  level: Float!
   name: String!
   playTime: Float
   timeOffset: Float!
-
-}
-
-type QueryType {
-  offlinePlayer(name: String!): OfflinePlayer
-  player(name: String!): Player
-  server: Server
-  whitelist: WhitelistQuery
-  world(name: String = "world"): World
+  gamemode: String
 }
 
 type Server {
@@ -89,6 +93,7 @@ type Server {
   Entity    getEntityâ(UUID uuid)
   """
   generateStructures: Boolean!
+  hasWhitelist: Boolean!
   "    HelpMap	getHelpMap()"
   idleTimeout: Int!
   ip: String!
@@ -142,8 +147,8 @@ type Server {
   ticksPerWaterSpawns: Int!
   """
   long[]    getTickTimes()
-  double[]    getTPS()
   """
+  getTPS: [Int]
   updateFolder: String!
   "    File	getUpdateFolderFile()"
   version: String!
@@ -157,16 +162,19 @@ type Server {
   worlds: [World!]
 }
 
+# Mutations Types
+
 type WhitelistMutation {
+  status(status: Boolean!): Server!
   add(name: String!): OfflinePlayer
   remove(name: String!): OfflinePlayer
 }
 
-type WhitelistQuery {
-  players: [OfflinePlayer!]
-}
-
-type World {
-  allowAnimals: Boolean!
-  name: String!
+type PlayerMutations {
+  ban(name: String!, reason: String!): Player
+  kick(name: String!, reason: String!): Player
+  setLevel(name: String!, level: Int!): Player
+  setHealth(name: String!, health: Int!): Player
+  setGameMode(name: String!, gamemode: String!): Player
+  setFoodLevel(name: String!, foodLevel: Int!): Player
 }

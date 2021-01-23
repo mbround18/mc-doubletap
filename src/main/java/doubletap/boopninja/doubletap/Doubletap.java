@@ -1,6 +1,7 @@
 package doubletap.boopninja.doubletap;
 
 import static java.lang.String.format;
+import static org.bukkit.Bukkit.getScheduler;
 import static spark.Spark.*;
 
 import com.google.gson.Gson;
@@ -23,6 +24,8 @@ public final class Doubletap extends JavaPlugin {
   public static Config config = null;
   public static final Logger logger = LoggerFactory.getLogger("Doubletap");
   private final HashMap<String, Boolean> featureFlags = new HashMap<>();
+  private static Doubletap main;
+  public final String configPath = "config.json";
 
   private void startupWebserver(int portNumber) {
     staticFiles.externalLocation(FileResourceUtils.PluginDirectory);
@@ -47,13 +50,15 @@ public final class Doubletap extends JavaPlugin {
         return "{\"message\":\"500 internal server error\"}";
       }
     );
-
-    logger.info(format("Server Initialized! Navigate to http://127.0.0.1:%s/graphql", portNumber));
   }
 
   private BaseIntegration loadLocalIntegration(final String klassName) {
     try {
-      String klassPath = format("doubletap.boop.ninja.doubletap.Integrations.%s.%sIntegration", klassName, klassName);
+      String klassPath = format(
+        "doubletap.boop.ninja.doubletap.Integrations.%s.%sIntegration",
+        klassName,
+        klassName
+      );
       return (BaseIntegration) Class.forName(klassPath).getDeclaredConstructor().newInstance();
     } catch (
       InstantiationException
@@ -88,7 +93,6 @@ public final class Doubletap extends JavaPlugin {
   }
 
   private void setupPluginFiles() {
-    String configPath = "config.json";
     if (!getDataFolder().exists()) {
       if (getDataFolder().mkdir()) {
         logger.info("Created Doubletap plugin directory");
@@ -96,25 +100,31 @@ public final class Doubletap extends JavaPlugin {
     }
     FileResourceUtils.PluginDirectory = getDataFolder().getPath();
     String overwriteEnvVar = System.getenv("MC_DOUBLETAP_OVERWRITE");
-    Boolean overwrite = false;
+    boolean overwrite = false;
     if (overwriteEnvVar != null) {
       overwrite = "true".equals(overwriteEnvVar.toLowerCase(Locale.ROOT));
     }
     FileResourceUtils.copyResourceToPluginDir(configPath, overwrite);
-    Doubletap.config = FileResourceUtils.pluginFileToClass(configPath, Config.class);
-
-    FileResourceUtils.copyResourceToPluginDir("policies/admin.json", overwrite);
-    FileResourceUtils.copyResourceToPluginDir("policies/generic.json", overwrite);
+    boolean schemaExists = FileResourceUtils.pluginFileExists("schema/config.schema.json");
+    if (!schemaExists || overwrite) {
+      FileResourceUtils.copyResourceToPluginDir("policies/admin.json", overwrite);
+      FileResourceUtils.copyResourceToPluginDir("policies/generic.json", overwrite);
+    }
     FileResourceUtils.copyResourceToPluginDir("schema/config.schema.json", overwrite);
   }
 
   @Override
   public void onEnable() {
     logger.info("-".repeat(50));
+    Doubletap.main = this;
     int pluginId = 9717;
 
     // Initiate project files
     setupPluginFiles();
+    Doubletap.config = FileResourceUtils.pluginFileToClass(configPath, Config.class);
+    if (Doubletap.config == null) {
+      Doubletap.config = new Config();
+    }
 
     // Initiate metrics
     try {
@@ -125,6 +135,7 @@ public final class Doubletap extends JavaPlugin {
 
     // Initiate webserver
     logger.info(format("Loaded config %n%s", new Gson().toJson(config)));
+
     startupWebserver(config.port);
     loadIntegrations();
 
@@ -163,5 +174,9 @@ public final class Doubletap extends JavaPlugin {
       }
     );
     before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+  }
+
+  public static void runTask(Runnable callback) {
+    getScheduler().runTask(main, callback);
   }
 }

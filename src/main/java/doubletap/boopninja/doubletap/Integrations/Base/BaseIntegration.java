@@ -39,7 +39,9 @@ public class BaseIntegration implements BaseIntegrationInterface {
     SchemaParser schemaParser = new SchemaParser();
     this.schemaGenerator = new SchemaGenerator();
 
-    InputStream schema = FileResourceUtils.getFileFromResourceAsStream(format("schema/%s.graphql", schemaName));
+    InputStream schema = FileResourceUtils.getFileFromResourceAsStream(
+      format("schema/%s.graphql", schemaName)
+    );
     this.typeRegistry = schemaParser.parse(schema);
 
     exceptionMap();
@@ -52,7 +54,11 @@ public class BaseIntegration implements BaseIntegrationInterface {
     exception(GraphQLException.class, this::castExceptionAsGraphqlErrors);
   }
 
-  private void castExceptionAsGraphqlErrors(Exception exception, Request request, Response response) {
+  private void castExceptionAsGraphqlErrors(
+    Exception exception,
+    Request request,
+    Response response
+  ) {
     Map<String, Object> results = new HashMap<>();
     ArrayList<String> errors = new ArrayList<>();
     errors.add(exception.toString());
@@ -74,12 +80,18 @@ public class BaseIntegration implements BaseIntegrationInterface {
     }
 
     // Cast request body as ExecutionInput
-    ExecutionInput.Builder gqlRequest = formatter.fromJson(request.body(), ExecutionInput.Builder.class);
+    ExecutionInput.Builder gqlRequest = formatter.fromJson(
+      request.body(),
+      ExecutionInput.Builder.class
+    );
 
     logGraphQLRequest(gqlRequest);
 
     // Generate schema build and execute it for results
-    GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(typeRegistry, wiring().Build(policies));
+    GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(
+      typeRegistry,
+      wiring().Build(policies)
+    );
     GraphQL build = GraphQL.newGraphQL(graphQLSchema).build();
     ExecutionResult executionResult = build.execute(gqlRequest);
 
@@ -108,7 +120,10 @@ public class BaseIntegration implements BaseIntegrationInterface {
       messages.add(query);
     }
     if (content.getVariables() != null) {
-      String variables = String.format("[Variables]: %s", new Gson().toJson(content.getVariables()));
+      String variables = String.format(
+        "[Variables]: %s",
+        new Gson().toJson(content.getVariables())
+      );
       messages.add(variables);
     }
     logger.debug(String.join("\n", messages));

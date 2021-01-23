@@ -31,16 +31,30 @@ public class Role {
 
   public boolean isBaseNode(String node) {
     return (
-      this.baseNodes.stream().filter(baseNode -> Pattern.compile(baseNode).matcher(node).matches()).toArray().length > 0
+      this.baseNodes.stream()
+        .filter(baseNode -> Pattern.compile(baseNode).matcher(node).matches())
+        .toArray()
+        .length >
+      0
     );
   }
 
   public boolean isAllowed(String node) {
     boolean allowedNodesCheck =
-      Arrays.stream(allowedPolicies()).filter(policy -> policy.matchesAttribute(node)).toArray().length > 0;
+      Arrays
+        .stream(allowedPolicies())
+        .filter(policy -> policy.matchesAttribute(node))
+        .toArray()
+        .length >
+      0;
     if (allowedNodesCheck) {
       boolean deniedNodesCheck =
-        Arrays.stream(deniedPolicies()).filter(policy -> policy.matchesAttribute(node)).toArray().length > 0;
+        Arrays
+          .stream(deniedPolicies())
+          .filter(policy -> policy.matchesAttribute(node))
+          .toArray()
+          .length >
+        0;
       return !deniedNodesCheck;
     }
     return false;
