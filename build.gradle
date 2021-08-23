@@ -61,7 +61,7 @@ dependencies {
         exclude module: 'opus-java'
     }
 
-    configurations.compile.extendsFrom(configurations.extraLibs)
+    configurations.implementation.extendsFrom(configurations.extraLibs)
 }
 
 
