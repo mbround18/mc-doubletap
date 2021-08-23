@@ -8,13 +8,13 @@ jobs:
     container: gradle:jdk11
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # renovate: tag=v2
 
       - name: Build with Gradle
         run: gradle build
 
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@27121b0bdffd731efa15d66772be8dc71245d074 # renovate: tag=v2
         with:
           name: release
           path: |
@@ -26,7 +26,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Download latest release
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@3be87be14a055c47b01d3bd88f8fe02320a9bb60 # renovate: tag=v2
         with:
           name: release
       # Update tag and pre-release
