@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'doubletap.boop.ninja'
-version = '1.0-SNAPSHOT'
+version = '1.1-SNAPSHOT'
 
 
 compileJava   {
@@ -52,7 +52,7 @@ dependencies {
     compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
 
     // Libs to be included on publication of jar
-    extraLibs group: "org.bstats", name: "bstats-bukkit", version: "1.7"
+    extraLibs group: "org.bstats", name: "bstats-bukkit", version: "2.2.1"
     extraLibs group: "com.sparkjava", name: "spark-core", version: "2.9.3"
     extraLibs group: "com.sparkjava", name: "spark-template-mustache", version: "2.7.1"
     extraLibs group: "com.graphql-java", name: "graphql-java", version: "16.1"
