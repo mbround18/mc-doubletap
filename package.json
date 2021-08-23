@@ -14,7 +14,7 @@
     "printWidth": 100
   },
   "devDependencies": {
-    "husky": "4.3.7",
+    "husky": "7.0.1",
     "prettier": "2.2.1",
     "prettier-plugin-java": "1.0.1"
   },
