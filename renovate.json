@@ -1,0 +1,7 @@
+{
+  "extends": ["github>renovatebot/.github"],
+  "assignees": ["mbround18"],
+  "semanticCommitScope": "deps",
+  "automergeType": "pr",
+  "prCreation": "immediate"
+}
