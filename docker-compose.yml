@@ -9,7 +9,7 @@ services:
       - ./tmp/plugins:/data/build/libs
 
   mc-server:
-    image: itzg/minecraft-server:adopt11
+    image: itzg/minecraft-server:adopt11@sha256:e08d0e680cf68b8174b0056a9e0baa631e994bd6f146d7f7bb3cc3221bb1dd41
     environment:
       EULA: "TRUE"
       TYPE: "PAPER"
