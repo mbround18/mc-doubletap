@@ -14,10 +14,10 @@ husky@7.0.2:
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.2.tgz#21900da0f30199acca43a46c043c4ad84ae88dff"
   integrity sha512-8yKEWNX4z2YsofXAMT7KvA1g8p+GxtB1ffV8XtpAEGuXNAbCV5wdNKH+qTpw8SM9fh4aMPDR+yQuKfgnreyZlg==
 
-java-parser@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/java-parser/-/java-parser-1.4.0.tgz#c7eeb37bdcb507f4b87effaab0fe891338ffa5e6"
-  integrity sha512-5r1Ez6D8SRprarqwXTYzu6Am//jw37USu8ie8a5166KfgTc2yKa0wlz08xKX1HXYRo/jbnODUfGMgd7gPhHLog==
+java-parser@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/java-parser/-/java-parser-2.0.0.tgz#1df0f2bdf7be970a11e112697d7c914b34b0f2a0"
+  integrity sha512-5sTEggUlp+uns7tfHGwRTN+cMlgPHw00oNjAz6YdwEyQyWQ9VzUNbYuPuDyJDWfcFyZTlHKD5f7VbtChKZf4xw==
   dependencies:
     chevrotain "6.5.0"
     lodash "4.17.21"
@@ -27,12 +27,12 @@ lodash@4.17.21:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
-prettier-plugin-java@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-java/-/prettier-plugin-java-1.4.0.tgz#61f3cbeb204ba76758cd3ab60182a0f8622eb341"
-  integrity sha512-Yie1yn4OdEF5Qey+3bChv8OuvMkzoMv07R6s/j1sn9HfZQxpw0eCSaXLOPyS7B6vVlaF1cr2TD1NsNSvxjVU1g==
+prettier-plugin-java@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-java/-/prettier-plugin-java-1.5.0.tgz#f5574e8691b72cedcbbea3f2efe21c24452ef307"
+  integrity sha512-ULiWgCuZaMdpUwoQIocB+RREv0dIEbcxwM7ewUy7yZgQfE9bVYMhQ6YVtS5y2g3AVodHJc+ki+wRidt4l0q3Uw==
   dependencies:
-    java-parser "1.4.0"
+    java-parser "2.0.0"
     lodash "4.17.21"
     prettier "2.3.1"
 
