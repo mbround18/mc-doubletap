@@ -27,10 +27,10 @@ lodash@4.17.21:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
-prettier-plugin-java@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-java/-/prettier-plugin-java-1.5.0.tgz#f5574e8691b72cedcbbea3f2efe21c24452ef307"
-  integrity sha512-ULiWgCuZaMdpUwoQIocB+RREv0dIEbcxwM7ewUy7yZgQfE9bVYMhQ6YVtS5y2g3AVodHJc+ki+wRidt4l0q3Uw==
+prettier-plugin-java@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-java/-/prettier-plugin-java-1.6.0.tgz#100657497e704bfc4a0091148ba28d342116d303"
+  integrity sha512-yxeoei7bgQ8DGXEbUVs1m21ZhGknx8YUELlRP5CfHUUK7/yIpUvn+9tuYhPVO9v0nSfphBDAciwYcQH9RUMBLw==
   dependencies:
     java-parser "2.0.0"
     lodash "4.17.21"
