@@ -16,7 +16,7 @@
   "devDependencies": {
     "husky": "7.0.4",
     "prettier": "2.4.1",
-    "prettier-plugin-java": "1.5.0"
+    "prettier-plugin-java": "1.6.0"
   },
   "husky": {
     "hooks": {
