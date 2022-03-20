@@ -1,4 +1,4 @@
-FROM gradle:jdk11@sha256:16294b549832db4f9bb9c985ef0739a7250395d18112456cd36154899fb911fa
+FROM gradle:jdk11@sha256:b291c31af23e3f462a7737dde63f3a999bb44407bf3e3b91c56fb5a6fbdd1f24
 
 RUN mkdir -p /data
 
