@@ -57,7 +57,7 @@ dependencies {
     extraLibs group: "com.sparkjava", name: "spark-template-mustache", version: "2.7.1"
     extraLibs group: "com.graphql-java", name: "graphql-java", version: "16.2"
     extraLibs group: 'com.auth0', name: 'java-jwt', version: '3.19.2'
-    extraLibs ('net.dv8tion:JDA:4.2.0_168') {
+    extraLibs ('net.dv8tion:JDA:4.2.0_247') {
         exclude module: 'opus-java'
     }
 
